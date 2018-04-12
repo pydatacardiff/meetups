@@ -8,4 +8,4 @@ PyData provides a forum for the international community of users and developers 
 
 PyData is an educational program of NumFOCUS, a 501(c)3 non-profit organization in the United States. The PyData Code of Conduct (http://pydata.org/code-of-conduct.html) governs this meetup. To discuss any issues or concerns relating to the code of conduct or the behavior of anyone at a PyData meetup, please contact NumFOCUS Executive Director Leah Silen (+1 512-222-5449; leah@numfocus.org) or the group organiser.
 
-Twitter: @PyDataCardiff
+Twitter: [@PyDataCardiff](https://twitter.com/pydatacardiff)
