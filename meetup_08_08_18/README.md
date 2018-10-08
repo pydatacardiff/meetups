@@ -2,4 +2,4 @@
 
 ## Talk Slides:
 
-[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_13_6_18/IntroAndWelcome.pdf) by Tim Vivian-Griffiths
+[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_08_08_18/Meetup%208-8-18.pdf) by Tim Vivian-Griffiths
