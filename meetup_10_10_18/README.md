@@ -2,4 +2,8 @@
 
 ## Talk Slides:
 
-[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_08_08_18/Meetup%208-8-18.pdf) by Tim Vivian-Griffiths
+[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_10_10_18/Meetup%2010-10-18.pdf) by Tim Vivian-Griffiths
+
+[An introduction to Neural Networks](https://github.com/pydatacardiff/meetups/blob/master/meetup_10_10_18/Intro_To_NN.pdf) by James Campbell
+
+[Probablistic Machine Learning](https://github.com/pydatacardiff/meetups/blob/master/meetup_10_10_18/Probabilistic%20ML.pdf) by Yunus Saatchi
