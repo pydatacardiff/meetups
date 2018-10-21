@@ -1,4 +1,4 @@
-# Meetup at [Tramshed Tech](http://www.tramshedtech.co.uk/index), 8th August 2018
+# Meetup at [Tramshed Tech](http://www.tramshedtech.co.uk/index), 10th October 2018
 
 ## Talk Slides:
 
