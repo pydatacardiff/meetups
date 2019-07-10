@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata about the presentation -->
+    <meta charset="utf-8">
+
+    <title>The title</title>
+
+    <meta name="description" content="Some description">
+    <meta name="author" content="Some Author">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <!-- Presentation Styles -->
+    <link rel="stylesheet" href="static/revealjs/css/reveal.css">
+
+    
+      <link rel="stylesheet" href="static/revealjs/css/theme/black.css" id="theme">
+    
+
+    
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="static/revealjs/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "static/revealjs/css/print/pdf.css" : "static/revealjs/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="static/revealjs/lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    
+
+    <!-- Presentation body -->
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    ## Snakes And Lambdas
+
+- what is lambda
+- why is lambda (for data science)
+- how is lambda (to actually use)
+- when is lambda (the right choice)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## What is lambda?
+
+- serverless
+    - it runs on servers, you just don't deal with that
+
+- scaleable
+    - it only costs when running, you just pay more as it does more
+
+- micro-service
+    - it only does one small thing, you just have lots of different ones
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## What is lambda?
+
+1. Start a new lambda
+2. Set up lambda with user code - "cold start"
+3. Accept event 1 and process
+4. Wait
+   1. Accept event 2 and process - "warmed up"
+   2. Timeout and kill lambda
+
+There can be multiple _concurrent_ machines too
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## What is lambda?
+
+- Pay only for what you use
+- Manage only what you have to
+- Deal with extra/new/bursty traffic seamlessly
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## What is lambda?
+
+- Invocation payload (request and response)
+  - 6 MB (synchronous)
+  - 256 KB (asynchronous)
+- Deployment package size
+  - 50 MB (zipped, for direct upload)
+  - 250 MB (unzipped, including layers)
+  - 3 MB (console editor)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## Why is lambda?
+#### (for data science)
+
+- data-scientists != dev-ops professionals
+    - but our work needs to be 'released'
+- all data projects != ensemble xg-boost Keras TPU shenanigans
+    - "No ML is easier to manage than no ML" &copy; [@julsimon](https://twitter.com/julsimon/status/1124383078313537536)
+- data-projects != single-goal monolithic systems
+    - separate concerns, code bases and complication
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## How is lambda?
+#### (to actually use)
+
+1. write your python
+2. lambda your python
+3. ???
+4. profit
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            
+              <section data-markdown>
+                <script type="text/template">
+                  
+
+## 1. Write your python
+
+``` python
+from scipy import stats
+np.random.seed(12345678)
+x = np.random.random(10)
+y = 1.6*x + np.random.random(10)
+slope, intercept, r_value, p_value, std_err = 
+    stats.linregress(x, y)
+```
+
+
+                </script>
+              </section>
+            
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 2. Lambda your python
+
+- _event driven_
+  - an `event` is passed to a `handler function`
+- _json formatted_
+  - `events` are `json`
+  - `handler functions` return `json`
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 2. Lambda your python
+
+``` python
+import json
+from scipy import stats
+import numpy as np
+
+def lambda_handler(event, context):
+    np.random.seed(12345678)
+    x = np.random.random(10)
+    y = 1.6*x + np.random.random(10)
+    slope, intercept, r_value, p_value, std_err = stats.linregress(x, y) 
+    return_body = {
+        "m": slope, "c": intercept,"r2": r_value ** 2, 
+        "p": p_value, "se": std_err
+    }
+    return {"body": json.dumps(return_body)}
+```
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 2. Lambda your python
+
+![full console](media/full-console.png) <!-- .element height="25%" width="25%" -->
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 2. Lambda your python
+
+![editor](media/basic.png)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 2. Lambda your python
+
+![editor](media/basic-fail.png)
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3. ???????
+### (1. Layers)
+
+- `json` is _built in by default_
+  - so it `boto3`
+
+**PROBLEM**
+- lambda doesn't `pip install ....`
+
+**SOLUTION**
+- use `layers`
+  - numpy, scipy are _[published by aws](https://aws.amazon.com/blogs/aws/new-for-aws-lambda-use-any-programming-language-and-share-common-components/)_
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.1 Layers
+
+![layers](media/layers.png)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.1 Layers
+
+![editor](media/basic-success.png)
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3. ???????
+### (2 Custom Layers)
+
+**PROBLEM**
+- New requirement needs pandas
+
+**SOLUTION**
+- Create custom `layer`
+    - pre-compiled code on a specific path deployed as a `.zip`
+    - for 'any package' * using some [shell and docker](https://medium.com/@qtangs/creating-new-aws-lambda-layer-for-python-pandas-library-348b126e9f3e)
+        + \* YMMV
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.2 Custom Layers
+
+requirements.txt
+```
+pandas==0.23.4
+pytz==2018.7
+```
+
+get_layer_packages.sh
+``` bash
+#!/bin/bash
+
+export PKG_DIR="python"
+
+rm -rf ${PKG_DIR} && mkdir -p ${PKG_DIR}
+
+docker run --rm -v $(pwd):/foo -w /foo lambci/lambda:build-python3.6 \
+    pip install -r requirements.txt --no-deps -t ${PKG_DIR}
+```
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.2 Custom Layers
+
+execute.sh
+``` bash
+chmod +x get_layer_packages.sh
+./get_layer_packages.sh
+zip -r pandas.zip . -i "python/*"
+```
+
+Then upload + create as layer with `aws-cli` or manually with console
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+ 
+## 3.2 Custom Layers
+
+'any package' *
+- `pandas`
+- `pymysql`
+  - `lambda` needs to be _inside_ the same VPC
+- `statsmodels`
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3. ???????
+### (3 api gateway)
+
+**PROBLEM**
+- How does your team use your work? 
+
+**SOLUTION**
+- use `api gateway`
+  - AWS service that puts [REST api in front of the lambda](https://hackersandslackers.com/create-a-rest-api-endpoint-using-aws-lambda/)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.3 Api gateway
+
+![api gateway console](media/api-gateway-console.png)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.3 Api gateway
+
+![api gateway test](media/api-gateway-test.png)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.3 Api gateway
+
+Get help from an adult (dev-ops professional)
+
+![ryker help](https://media.giphy.com/media/8vRrxHIZlJT2xvo920/giphy.gif)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.3 Api gateway
+
+If you can't find an adult
+
+- be careful about exposing the api
+  - not _obvious_ how and where it can be accessed
+    - resource policies
+- `swagger` is an api templating syntax
+  - cloud formation
+- click the 'deploy api' button after _every_ change
+  - use multiple stages
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3. ???????
+### (4 local dev - cloud deploy)
+
+**PROBLEM**
+- copy-pasta code into console is _bad_
+
+**SOLUTION**
+- use [`AWS SAM` cli](https://aws.amazon.com/blogs/compute/working-with-aws-lambda-and-lambda-layers-in-aws-sam/)
+  - local development + testing with docker
+  - 'cloudy' deployment with cloudformation cli
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.4 local dev - cloud deploy
+
+![sam squirrel](media/sam-big.png)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.4 local dev - cloud deploy
+
+``` bash
+Usage: sam [OPTIONS] COMMAND [ARGS]...
+
+Commands:
+  local     Run your Serverless application locally 
+            for quick development & testing.
+  logs      Fetch logs for a function
+  deploy    Deploy an AWS SAM application. This is an alias 
+            for 'aws cloudformation deploy'.
+  build     Build your Lambda function code
+  publish   Publish a packaged AWS SAM template to the AWS 
+            Serverless Application Repository.
+  init      Initialize a serverless application.
+  validate  Validate an AWS SAM template.
+  package   Package an AWS SAM application. This is an alias 
+            for 'aws cloudformation package'.
+```
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.4 local dev - cloud deploy
+
+Workflow
+- `sam init`
+- `sam local generate-event apigateway aws-proxy`
+    - `sam build` 
+        -  <span>&#x21F5;</span>
+    - `sam local invoke -e event.json`
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.4 local dev - cloud deploy
+
+``` bash
+alias playitsam='sam build && sam local invoke -e event.json'
+alias playitagainsam='sam build && sam local invoke -e'
+```
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 3.4 local dev - cloud deploy
+
+
+- `sam validate`
+- `sam package`
+- `sam deploy`
+
+![ryker faint](https://media.giphy.com/media/tYelSVzQPtLdm/giphy.gif)
+
+Get help from an adult (dev-ops professional)
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## 4. Profit
+
+![surple](media/Surple_Logo_Negative_Colour.png)
+
+Surple have 3 lambda data services
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+### linear regression
+#### 'Degree Days vs Energy = Efficiency'
+
+- user triggered event
+- queries specific data based on user selection
+- user facing visualisation
+- vpc cold starts
+
+![etl duration](/media/duration-interactive.png) <!-- .element height="70%" width="70%" -->
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+### time-series analysis
+#### 'Smart Targets'
+
+- scheduled for all meters as ETL to DB
+- highlight 'out of character' energy use
+- user facing visualisation and notifications
+
+![etl duration](/media/duration-etl.png) <!-- .element height="70%" width="70%" -->
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+### anomaly detection
+#### 'Smart Alarms'
+
+- scheduled for all meters as ETL to DB
+- highlight 'extreme' energy use
+- user email and notifications
+- this was extra fun/complicated
+  - Ask me how
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## Practical notes
+
+- tweaking cpu load has made more a difference than tweaking timeout
+- taking the time to set up SAM correctly has saved at least the time of browser console work alone
+- A Cloud Guru is built on lambda ([cheaply?](https://aws.amazon.com/lambda/pricing/))
+  - And has some [great material on it](https://acloud.guru/learn/aws-lambda)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## When is lambda?
+#### (the right choice)
+
+Good case
+- 'traditional' models
+  - regression, timeseries, hopefully more...
+- per 'reasonable' data set
+  - `for each`
+- 'now in a minute'
+ - (not actually a minute, more like seconds)
+- 'bursty'
+  - some, or lots of people need it then no one does
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## When is lambda?
+#### (the right choice)
+
+Bad case
+- 'fancy' models
+  - RAM limits, CPU limits
+- whole scale
+  - `across all`
+- immediate response
+  - can't afford a cold start: 'lambda your lambda'
+- 24:7 flat load
+  - need 100% load 100% of the time
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## Thank you
+
+Slides available: [https://github.com/DaveParr/snakes_and_lambdas](https://github.com/DaveParr/snakes_and_lambdas)
+Twitter: [@DaveParr](https://twitter.com/DaveParr)
+
+
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+          
+            <section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## **'Smart Alarms' actually runs in**
+
+![Troll face](media/r-troll.jpg)
+
+
+                  </script>
+                </section>
+              
+                <section data-markdown>
+                  <script type="text/template">
+                    
+
+## Runtime Layers
+
+**PROBLEM**
+- The thing I want to use isn't in Python
+  - or Go, NodeJS, C#, Java
+
+**SOLUTION**
+- use `Runtime Layers`
+  - any language compiled into a layer
+  - accessed via `bash` or similar that processes event and passes to runtime
+  - [`bakdata/aws-lambda-r-runtime`](https://github.com/bakdata/aws-lambda-r-runtime)
+                  </script>
+                </section>
+              
+            </section>
+          
+        
+      </div>
+
+    </div>
+
+    <!-- Scripts loaded after the content -->
+    <script src="static/revealjs/lib/js/head.min.js"></script>
+    <script src="static/revealjs/js/reveal.js"></script>
+
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+          { src: 'static/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+          // Interpret Markdown in <section> elements
+          { src: 'static/revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'static/revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+          // Syntax highlight for <code> elements
+          { src: 'static/revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+
+          // Zoom in and out with Alt+click
+          { src: 'static/revealjs/plugin/zoom-js/zoom.js', async: true },
+
+          // Speaker notes
+          { src: 'static/revealjs/plugin/notes/notes.js', async: true },
+
+          // MathJax
+          { src: 'static/revealjs/plugin/math/math.js', async: true }
+        ]
+      });
+
+      Reveal.configure({"autoSlide": 0, "autoSlideStoppable": true, "backgroundTransition": "default", "center": true, "controls": true, "embedded": false, "fragments": true, "help": true, "hideAddressBar": true, "history": true, "keyboard": true, "loop": false, "mouseWheel": false, "overview": true, "parallaxBackgroundHorizontal": "", "parallaxBackgroundImage": "", "parallaxBackgroundSize": "", "parallaxBackgroundVertical": "", "previewLinks": false, "progress": true, "rtl": false, "showNotes": false, "slideNumber": false, "touch": true, "transition": "default", "transitionSpeed": "default", "viewDistance": 3});
+    </script>
+  </body>
+</html>
