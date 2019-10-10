@@ -2,6 +2,6 @@
 
 ## Talk Slides:
 
-[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_08_08_18/Meetup%208-8-18.pdf) by Tim Vivian-Griffiths
+[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_2018_08_08/Meetup%208-8-18.pdf) by Tim Vivian-Griffiths
 
-[Python in Brain Research](https://github.com/pydatacardiff/meetups/blob/master/meetup_08_08_18/python-brain-research.pdf) by Dominik Krzemiński and Maciek Szul
+[Python in Brain Research](https://github.com/pydatacardiff/meetups/blob/master/meetup_2018_08_08/python-brain-research.pdf) by Dominik Krzemiński and Maciek Szul

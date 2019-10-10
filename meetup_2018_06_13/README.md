@@ -2,8 +2,8 @@
 
 ## Talk Slides:
 
-[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_13_6_18/IntroAndWelcome.pdf) by Tim Vivian-Griffiths
+[Introduction, Welcome and Community News](https://github.com/pydatacardiff/meetups/blob/master/meetup_2018_06_13/IntroAndWelcome.pdf) by Tim Vivian-Griffiths
 
-[Time Series Analytics for Big Fast Data](https://github.com/pydatacardiff/meetups/blob/master/meetup_13_6_18/Time%20Series%20Analytics%20for%20Big%20Fast%20Data%20Kx%20Systems.pdf) by Jonathan Guy from [Kx Systems](https://kx.com/)
+[Time Series Analytics for Big Fast Data](https://github.com/pydatacardiff/meetups/blob/master/meetup_2018_06_13/Time%20Series%20Analytics%20for%20Big%20Fast%20Data%20Kx%20Systems.pdf) by Jonathan Guy from [Kx Systems](https://kx.com/)
 
-[Intro to Network Analysis with Game of Thrones](https://github.com/pydatacardiff/meetups/blob/master/meetup_13_6_18/Intro%20to%20Network%20Analysis%20with%20Game%20of%20Thrones.pdf) by Kacper Wieczorek
+[Intro to Network Analysis with Game of Thrones](https://github.com/pydatacardiff/meetups/blob/master/meetup_2018_06_13/Intro%20to%20Network%20Analysis%20with%20Game%20of%20Thrones.pdf) by Kacper Wieczorek
